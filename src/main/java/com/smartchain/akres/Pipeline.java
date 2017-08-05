@@ -1,18 +1,16 @@
+package com.smartchain.akres;
+
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import groovy.lang.IntRange;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by adrian on 8/1/17.
@@ -71,18 +69,7 @@ public class Pipeline {
                 count++;
             System.out.println(body.toString());
             System.out.println(jsonResponse.getBody());
-//            break;
             }
-
-//            HttpResponse<JsonNode> jsonResponse = Unirest.post("http://localhost:3000/api/LandTitle")
-//                    .header("accept", "application/json")
-//                    .header("Content-Type", "application/json")
-//                    .header("Accept-Encoding", "gzip, deflate, br")
-//                    .body(value.toString())
-//                    .asJson();
-//            System.out.println(value.toString());
-//            System.out.println(jsonResponse.getBody());
-//            System.out.println("lasd");
             System.out.println(Unirest.get("http://localhost:3000/api/LandTitle").asJson().getBody().toString());
         } catch (Exception e) {
             e.printStackTrace();

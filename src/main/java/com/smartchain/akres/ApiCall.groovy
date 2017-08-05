@@ -1,19 +1,15 @@
+package com.smartchain.akres
+
 import com.mashape.unirest.http.HttpResponse
 import com.mashape.unirest.http.JsonNode
 import com.mashape.unirest.http.Unirest
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord
-import io.restassured.RestAssured.*
-
-import static javafx.beans.binding.Bindings.select
-import static javafx.beans.binding.Bindings.when
 
 class Pipeline1 {
     static void main(String[] args) {
         populateComposer()
-
-
     }
 
     static void closeResource(Closeable c) {
@@ -63,8 +59,6 @@ class Pipeline1 {
                 print jsonResponse.body.toString()
                 break
             }
-
-
 
 //            HttpResponse<JsonNode> jsonResponse = Unirest.post("http://localhost:3000/api/LandTitle")
 //            .header("accept", "application/json")
