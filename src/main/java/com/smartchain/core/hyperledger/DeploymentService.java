@@ -3,9 +3,7 @@ package com.smartchain.core.hyperledger;
 import com.smartchain.core.docker.DockerService;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
-import com.spotify.docker.client.messages.ContainerConfig;
 import com.spotify.docker.client.messages.ContainerCreation;
-import com.spotify.docker.client.messages.HostConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,27 +50,9 @@ public class DeploymentService {
     }
 
     private void runCaContainer() throws DockerException, InterruptedException {
-        String containerName = "ca.org1.example.com";
-        String containerId;
-        if(dockerService.isContainerCreated(containerName)) {
-            containerId = dockerService.getContainerId(containerName);
-        }else {
-            ContainerCreation containerCreation = dockerService.getDockerClient().createContainer(ContainerConfigurations.PEER_CA_CONFIGURATION, containerName);
-            containerId = containerCreation.id();
-        }
-        dockerService.getDockerClient().startContainer(containerId);
+        dockerService.runContainer(ContainerConfigurations.PEER_CA_CONFIGURATION, "ca.org1.example.com");
     }
 
-    private void runContainer(ContainerConfig containerConfig, String containerName) throws DockerException, InterruptedException {
-        String containerId;
-        if(dockerService.isContainerCreated(containerName)) {
-            containerId = dockerService.getContainerId(containerName);
-        }else {
-            ContainerCreation containerCreation = dockerService.getDockerClient().createContainer(containerConfig, containerName);
-            containerId = containerCreation.id();
-        }
-        dockerService.getDockerClient().startContainer(containerId);
-    }
 
     public void redeployHyperledgerFabricNetwork() throws DockerException, InterruptedException {
 //        try {

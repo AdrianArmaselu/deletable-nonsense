@@ -4,12 +4,15 @@ import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
+import com.spotify.docker.client.messages.Container;
+import com.spotify.docker.client.messages.ContainerConfig;
+import com.spotify.docker.client.messages.ContainerCreation;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
-
-// TODO: THIS CLASS NEEDS PROPER EXCEPTION HANDLING FOR WHEN INFORMATION IS NOT FOUND
 /*
     This class is basically a layer on top of dockerClient
  */
@@ -22,16 +25,17 @@ public class DockerService {
         dockerClient = DefaultDockerClient.fromEnv().connectionPoolSize(16).build();
     }
 
-    public DockerClient getDockerClient(){
+    public DockerClient getDockerClient() {
         return dockerClient;
     }
 
     public String getContainerId(String containerName) throws DockerException, InterruptedException {
+        // container names start with '/' character, so we use substring
         return dockerClient
                 .listContainers(DockerClient.ListContainersParam.allContainers())
                 .stream()
                 .filter(container -> container.names().stream().anyMatch(s -> s.substring(1).equals(containerName)))
-                .findAny().get().id();
+                .findAny().map(Container::id).orElse(null);
     }
 
     public boolean isContainerCreated(String containerName) throws DockerException, InterruptedException {
@@ -40,8 +44,12 @@ public class DockerService {
                 .stream()
                 .anyMatch(container -> container.names().stream().anyMatch(s -> s.substring(1).equals(containerName)));
     }
+//
+//    private boolean anyContainerNameMatch(Container container){
+//        container -> container.names().stream().anyMatch(s -> s.substring(1).equals(containerName)
+//    }
 
-    public void pullImages(List<String> images){
+    public void pullImages(List<String> images) {
         images.forEach(s -> {
             try {
                 dockerClient.pull(s);
@@ -93,6 +101,20 @@ public class DockerService {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    /*
+        Run the Container. Creates one first if it does not exist already.
+     */
+    public void runContainer(ContainerConfig containerConfig, String containerName) throws DockerException, InterruptedException {
+        String containerId;
+        if (isContainerCreated(containerName)) {
+            containerId = getContainerId(containerName);
+        } else {
+            ContainerCreation containerCreation = getDockerClient().createContainer(containerConfig, containerName);
+            containerId = containerCreation.id();
+        }
+        getDockerClient().startContainer(containerId);
     }
 
     public void close() {
