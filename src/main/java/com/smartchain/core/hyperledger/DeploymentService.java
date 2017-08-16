@@ -80,8 +80,7 @@ public class DeploymentService {
 
     public static void main(String[] args) {
         DeploymentService deploymentService = new DeploymentService();
-        deploymentService.redeployHyperledgerFabricNetwork();
+//        deploymentService.redeployHyperledgerFabricNetwork();
     }
 }
-//            ExecCreation execCreation = dockerService.getDockerClient().execCreate(containerId, new String[]{"sh", "-c", "'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/19ab65abbb04807dad12e4c0a9aaa6649e70868e3abd0217a322d89e47e1a6ae_sk -b admin:adminpw -d'"});
 

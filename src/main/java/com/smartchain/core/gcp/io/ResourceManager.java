@@ -14,7 +14,7 @@ import java.util.Collections;
  */
 public class ResourceManager {
 
-    private static final String serviceAccountApiKeyFile = "Alysia-429a38cd14fd.json";
+    private static final String serviceAccountApiKeyFile = "SmartChainCore-476519a0dc33.json";
 
     // this is here because google is silly and uses tho methods to pass credentials
     public static GoogleCredentials getServiceAccountApiKeyCredentials() throws IOException {

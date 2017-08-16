@@ -1,4 +1,4 @@
-package com.smartchain.core.gcp.gcp;
+package com.smartchain.core.gcp.service;
 
 import com.smartchain.core.gcp.endpoint.DataEndpoint;
 import com.smartchain.core.gcp.io.ResourceManager;

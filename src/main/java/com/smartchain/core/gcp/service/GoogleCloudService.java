@@ -1,4 +1,4 @@
-package com.smartchain.core.gcp.gcp;
+package com.smartchain.core.gcp.service;
 
 import com.smartchain.core.gcp.model.GoogleCloudConfiguration;
 

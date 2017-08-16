@@ -1,10 +1,10 @@
 package com.smartchain.core.gcp;
 
-import com.smartchain.core.gcp.endpoint.LendingClubEndpoint;
 import com.smartchain.core.gcp.model.GoogleCloudConfiguration;
-import com.smartchain.core.gcp.gcp.DataProcService;
-import com.smartchain.core.gcp.gcp.PipelineService;
-import com.smartchain.core.gcp.gcp.StorageService;
+import com.smartchain.core.gcp.service.ContainerEngineServiceJava;
+import com.smartchain.core.gcp.service.DataProcService;
+import com.smartchain.core.gcp.service.PipelineService;
+import com.smartchain.core.gcp.service.StorageService;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -20,7 +20,8 @@ public class Entrypoint {
         StorageService storageService = new StorageService(configuration);
         DataProcService dataProcService = new DataProcService(configuration);
         PipelineService pipelineService = new PipelineService(configuration);
+        ContainerEngineServiceJava containerEngineService = new ContainerEngineServiceJava(configuration);
+//        containerEngineService.createContainerCluster();
 
-        storageService.upload(bucketName, "lendingClub.zip", new LendingClubEndpoint());
     }
 }

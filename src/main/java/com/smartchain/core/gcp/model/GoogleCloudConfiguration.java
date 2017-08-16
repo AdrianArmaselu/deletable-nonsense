@@ -14,6 +14,7 @@ import java.security.GeneralSecurityException;
 public class GoogleCloudConfiguration {
 
     private String projectId;
+    private String zone;
 
     private HttpTransport transport;
     private JacksonFactory jacksonFactory;
@@ -21,7 +22,8 @@ public class GoogleCloudConfiguration {
     private GoogleCredentials credentials;
 
     public GoogleCloudConfiguration() throws GeneralSecurityException, IOException {
-        projectId = "alysia-172200";
+        projectId = "helical-song-175101";
+        zone = Zones.us_central1;
         transport = GoogleNetHttpTransport.newTrustedTransport();
         jacksonFactory = JacksonFactory.getDefaultInstance();
         credential = ResourceManager.getServiceAccountApiKeyCredential();
@@ -48,6 +50,10 @@ public class GoogleCloudConfiguration {
         this.credentials = credentials;
     }
 
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
     public String getProjectId() {
         return projectId;
     }
@@ -66,5 +72,9 @@ public class GoogleCloudConfiguration {
 
     public GoogleCredentials getCredentials() {
         return credentials;
+    }
+
+    public String getZone() {
+        return zone;
     }
 }
