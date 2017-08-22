@@ -1,0 +1,8 @@
+
+Pubnub publish key
+pub-c-6584b631-f619-4b57-8683-522b8c83b1a5
+
+Pubnub subscribe key
+sub-c-b823be88-83a7-11e7-9034-1e9edc6dd7f6
+
+compile group: 'com.pubnub', name: 'pubnub-gson', version: '4.+'

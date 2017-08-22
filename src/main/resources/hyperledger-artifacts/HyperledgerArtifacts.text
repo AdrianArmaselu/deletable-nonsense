@@ -1,0 +1,14 @@
+fabric-ca-server
+fabric-ca-client
+
+Peer(Contains MSP)
+Orderer
+Kafka Broker - the Orderer connects to this to get events
+
+cryptogen - consumes crypto-config.yaml to generate certificates
+crypto-config.yaml - describes topology of the network
+
+configtxgen - consumes configtx.yaml to produce
+configtx.yaml - describes network configuration, membership, and properties
+
+configtxlator - server that helps update the channel configuration

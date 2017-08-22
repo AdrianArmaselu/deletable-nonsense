@@ -1,0 +1,50 @@
+# Copyright Terra Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+  orderer.terra.com:
+      container_name: orderer.terra.com
+      image: hyperledger/fabric-orderer:x86_64-1.0.0
+      environment:
+        - ORDERER_GENERAL_LOGLEVEL=debug
+        - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+        - ORDERER_GENERAL_GENESISMETHOD=file
+        - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+        - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+        - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+        # enabled TLS
+        - ORDERER_GENERAL_TLS_ENABLED=true
+        - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+        - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+        - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+      command: orderer
+      volumes:
+      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./crypto-config/ordererOrganizations/terra.com/orderers/orderer.terra.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/terra.com/orderers/orderer.terra.com/tls/:/var/hyperledger/orderer/tls
+      ports:
+        - 7050:7050
+
+  peer0.terra.com:
+      container_name: peer0.terra.com
+      extends:
+        file: peer-base.yaml
+        service: peer-base
+      environment:
+        - CORE_PEER_ID=peer0.terra.com
+        - CORE_PEER_ADDRESS=peer0.terra.com:7051
+        - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.terra.com:7051
+        - CORE_PEER_LOCALMSPID=TerraMSP
+      volumes:
+          # Make sure the volumes are in the same folder as the .yaml file
+          - /var/run/:/host/var/run/
+          - ./crypto-config/peerOrganizations/terra.com/peers/peer0.terra.com/msp:/etc/hyperledger/fabric/msp
+          - ./crypto-config/peerOrganizations/terra.com/peers/peer0.terra.com/tls:/etc/hyperledger/fabric/tls
+      ports:
+        - 7051:7051
+        - 7053:7053

@@ -1,4 +1,4 @@
-package com.smartchain.akres;
+package com.akres;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
