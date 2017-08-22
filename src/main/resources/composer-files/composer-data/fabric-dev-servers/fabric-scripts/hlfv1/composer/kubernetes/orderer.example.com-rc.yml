@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  creationTimestamp: null
+  labels:
+    service: orderer.example.com
+  name: orderer.example.com
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    service: orderer.example.com
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: orderer.example.com
+    spec:
+      containers:
+      - command:
+        - orderer
+        env:
+        - name: ORDERER_GENERAL_LOGLEVEL
+          value: debug
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /etc/hyperledger/configtx/composer-genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /etc/hyperledger/msp/orderer/msp
+        image: hyperledger/fabric-orderer:x86_64-1.0.0
+        imagePullPolicy: ""
+        name: orderer.example.com
+        ports:
+        - containerPort: 7050
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/hyperledger/configtx
+          name: .
+        - mountPath: /etc/hyperledger/msp/orderer/msp
+          name: .crypto-configordererOrganizationsexample.comorderersorderer.example.commsp
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - hostPath:
+          path: ./
+        name: .
+      - hostPath:
+          path: ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp
+        name: .crypto-configordererOrganizationsexample.comorderersorderer.example.commsp
+status:
+  replicas: 0

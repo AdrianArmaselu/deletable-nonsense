@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  creationTimestamp: null
+  labels:
+    service: couchdb
+  name: couchdb
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    service: couchdb
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: couchdb
+    spec:
+      containers:
+      - env:
+        - name: DB_URL
+          value: http://localhost:5984/member_db
+        image: hyperledger/fabric-couchdb:x86_64-1.0.0
+        imagePullPolicy: ""
+        name: couchdb
+        ports:
+        - containerPort: 5984
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status:
+  replicas: 0
