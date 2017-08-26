@@ -1,0 +1,48 @@
+/* Copyright (C) Smartchain - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Adrian Armaselu <adrian@smartchain.com>, August 2017
+ */
+
+  asset Competition identified by competitionId {
+    o String competitionId
+    --> Trainer owner
+    o String startTime
+    o String endTime
+    o Double awardAirenaCoins
+    o Double requiredTrialCoins
+  }
+
+  asset Wallet identified by walletId{
+    o String walletId
+    --> CompetitionParticipant owner
+    o Double trialCoins
+    o Double airenaCoins
+  }
+
+  participant Trainer identified by trainerId {
+    o String trainerId
+    o String firstName
+    o String lastName
+    o String email
+    o String phone
+  }
+
+  participant CompetitionParticipant identified by participantId {
+    o String participantId
+    o String firstName
+    o String lastName
+    o String email
+    o String phone
+  }
+
+  transaction Participation {
+    --> Competition competition
+    --> CompetitionParticipant competitor
+  }
+
+  event CompetitionUpdate {
+    --> Competition competition
+    --> CompetitionParticipant competitor
+    o String score
+  }
