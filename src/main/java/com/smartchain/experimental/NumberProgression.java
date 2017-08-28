@@ -6,6 +6,7 @@ package com.smartchain.experimental;
  * Written by Adrian Armaselu <adrian@smartchain.com>, August 2017
  */
 
+
 public class NumberProgression {
 
     public static void main(String[] args) {
