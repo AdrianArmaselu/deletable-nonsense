@@ -21,8 +21,6 @@ buildscript {
     dependencies {
         classpath group: 'com.google.protobuf', name: 'protobuf-gradle-plugin', version: '0.8.3'
         // https://mvnrepository.com/artifact/com.google.protobuf/protoc
-
-
     }
 }
 
@@ -99,6 +97,17 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.ethereum/geth
     compile group: 'org.ethereum', name: 'geth', version: '1.6.7'
+
+//    Ethereum
+    // https://mvnrepository.com/artifact/org.web3j/core
+    compile group: 'org.web3j', name: 'core', version: '2.3.0'
+
+//     https://mvnrepository.com/artifact/org.ethereum/solcJ-all
+//    compile group: 'org.ethereum', name: 'solcJ-all', version: '0.4.10'
+
+    // https://mvnrepository.com/artifact/org.ethereum/ethereumj-core
+    compile group: 'org.ethereum', name: 'ethereumj-core', version: '1.5.0-RELEASE'
+
 
 }
 
